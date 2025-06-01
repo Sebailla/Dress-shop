@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { IoBasketOutline, IoCartOutline } from 'react-icons/io5';
+import { IoCartOutline } from 'react-icons/io5';
 
 
 const EmptyPage = () => {

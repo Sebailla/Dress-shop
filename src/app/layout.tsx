@@ -1,8 +1,5 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import { geistMono } from "@/config/fonts";
-
-
 
 export const metadata: Metadata = {
   title: "Teslo-Shop",

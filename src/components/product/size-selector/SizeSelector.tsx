@@ -1,9 +1,9 @@
-import type { ValidSize } from "@/interfaces"
+import type { Size} from "@/interfaces"
 import clsx from 'clsx';
 
 interface Props {
-    selectedSize: ValidSize
-    availableSizes: ValidSize[]
+    selectedSize: Size
+    availableSizes: Size[]
 }
 
 export const SizeSelector = ({ selectedSize, availableSizes }: Props) => {

@@ -89,7 +89,7 @@ const CheckoutPage = () => {
                         <div className="mt-10">
                             <p className="mb-5 text-center">
                                 <span className="text-xs">
-                                    By clicking "Order," you agree to our <a href="#" className="font-bold">terms and conditions</a> of use and our data<a href="#" className="font-bold"> privacy policies</a>.
+                                    By clicking Order, you agree to our <a href="#" className="font-bold">terms and conditions</a> of use and our data<a href="#" className="font-bold"> privacy policies</a>.
                                 </span>
                             </p>
                             <Link

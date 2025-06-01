@@ -2,7 +2,7 @@
 import { Product } from "@/interfaces"
 import Image from "next/image"
 import Link from "next/link"
-import { useEffect, useState } from "react"
+import { useState } from "react"
 
 interface Props {
     product: Product

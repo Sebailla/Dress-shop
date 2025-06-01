@@ -50,8 +50,8 @@ const ProductPage = ({ params }: Props) => {
                 </p>
                 {/* Selector de talla */}
                 <SizeSelector
-                    selectedSize={product.size[0]}
-                    availableSizes={product.size}
+                    selectedSize={product.sizes[0]}
+                    availableSizes={product.sizes}
                 />
                 {/* Selector de Cantidad */}
                 <QuantitySelector
