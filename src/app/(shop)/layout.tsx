@@ -7,7 +7,7 @@ export default function ShopLayout({ children }: { children: React.ReactNode }) 
                 <TopMenu />
                 <Sidebar/>
 
-                <div className="px-1 sm:px-10 mt-24 mb-24">
+                <div className="px-1 md:px-10 mt-24 mb-24">
                     {children}
                 </div>
                 

@@ -1,13 +1,22 @@
 'use client'
 import { titleFont } from "@/config/fonts"
-import { useUiStore } from "@/store"
+import { useCartStore, useUiStore } from "@/store"
 import Link from "next/link"
+import { useEffect, useState } from "react"
 import { IoCartOutline, IoSearchOutline } from "react-icons/io5"
 
 
 export const TopMenu = () => {
 
+    const [loaded, SetLoaded]= useState(false)
+
+    useEffect(() => {
+        SetLoaded(true)
+    }, [])
+
     const openMenu = useUiStore(state => state.openSideMenu)
+    const totalItemsInCart = useCartStore(state => state.getTotalItems())
+
 
     return (
         <nav className="flex px-5 justify-between items-center w-full bg-white fixed top-0 z-10">
@@ -57,14 +66,25 @@ export const TopMenu = () => {
                     <IoSearchOutline className="w-7 h-7" />
                 </Link>
                 <Link
-                    href={'/cart'}
+                    href={
+                        (totalItemsInCart > 0 && loaded)
+                        ?
+                        '/cart'
+                        :
+                        '/empty'
+                    }
                     className="mx-2"
                 >
                     <div className="relative">
-                        <span className="absolute text-xs rounded-full px-1 font-bold -top-2 -right-2 bg-red-400 text-white"
-                        >
-                            3
-                        </span>
+                        {
+                            (loaded && totalItemsInCart > 0) &&
+                            (
+                                <span className="fade-in absolute text-xs rounded-full px-1 font-bold -top-2 -right-2 bg-red-400 text-white"
+                                >
+                                    {totalItemsInCart}
+                                </span>
+                            )
+                        }
                         <IoCartOutline className="w-7 h-7" />
                     </div>
                 </Link>

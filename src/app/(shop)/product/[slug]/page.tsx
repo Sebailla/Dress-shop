@@ -3,9 +3,10 @@ export const revalidate = 604800 // 7 días (segundos)
 //--------------------------------------------------------
 import { Metadata, ResolvingMetadata } from "next"
 import { getProductBySlug } from "@/actions"
-import { ProductMobileSlideshow, ProductSlideshow, QuantitySelector, SizeSelector, StockLabel } from "@/components"
+import { ProductMobileSlideshow, ProductSlideshow, StockLabel } from "@/components"
 import { bodyFont, titleFont } from "@/config/fonts"
 import { notFound } from "next/navigation"
+import { Selectors } from "./ui/Selectors"
 
 //---------------------------------------------------------
 //? Metadata
@@ -83,21 +84,11 @@ const ProductPage = async ({ params }: Props) => {
                 >
                     $ {product.price}
                 </p>
-                {/* Selector de talla */}
-                <SizeSelector
-                    selectedSize={product.sizes[0]}
-                    availableSizes={product.sizes}
-                />
-                {/* Selector de Cantidad */}
-                <QuantitySelector
-                    quantity={2}
-                />
+
                 {/* Stock */}
                 <StockLabel slug={product.slug} />
-                {/* button */}
-                <button className="btn-primary my-5 w-40">
-                    Add to Cart
-                </button>
+
+                <Selectors product={product}/>
 
                 {/* Descripcion */}
                 <h3 className="text-sm font-bold mb-3">Description</h3>

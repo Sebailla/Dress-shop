@@ -14,3 +14,13 @@ export interface Product {
 export type Size = 'XS'|'S'|'M'|'L'|'XL'|'XXL';
 export type Type = 'shirts'|'pants'|'hoodies'|'hats';
 export type Category = 'men'|'women'|'kid'|'unisex';
+
+export interface CartProducts{
+    id: string
+    slug: string
+    title: string
+    price: number
+    size: Size
+    quantity: number
+    image: string
+}
