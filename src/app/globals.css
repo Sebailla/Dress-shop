@@ -86,3 +86,6 @@ body {
   @apply bg-gray-200 hover:bg-gray-300 text-black py-2 px-4 rounded transition-all;
 }
 
+.btn-disabled {
+  @apply bg-gray-200 hover:bg-gray-400 text-black py-2 px-4 rounded transition-all;
+}
