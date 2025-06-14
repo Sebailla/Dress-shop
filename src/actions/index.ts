@@ -15,4 +15,9 @@ export {setUserAddress} from './address/setUserAddress'
 export {deleteUserAddress} from './address/deleteUserAddress'
 export {getUserAddress} from './address/getUserAddress'
 
+export {placeOrder} from './orders/placeOrder'
+export {getOrderById} from './orders/getOrderById'
+export {getOrderByUser} from './orders/getOrdersByUser'
+
+
 

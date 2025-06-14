@@ -5,12 +5,17 @@ import { countries } from './seed-countries';
 async function main() {
 
     //? Clear database
-        await prisma.country.deleteMany()
-        await prisma.productImage.deleteMany()
-        await prisma.product.deleteMany()
-        await prisma.category.deleteMany()
-        await prisma.user.deleteMany()
+    await prisma.orderAddress.deleteMany()
+    await prisma.orderItem.deleteMany()
+    await prisma.order.deleteMany()
 
+    await prisma.userAddress.deleteMany()
+    await prisma.user.deleteMany()
+    await prisma.country.deleteMany()
+
+    await prisma.productImage.deleteMany()
+    await prisma.product.deleteMany()
+    await prisma.category.deleteMany()
 
     const { categories, products, users } = initialData
 
@@ -44,7 +49,7 @@ async function main() {
     //? Product insert
     products.forEach(async product => {
         const { type, images, ...rest } = product
-        
+
         const dbProduct = await prisma.product.create({
             data: {
                 ...rest,

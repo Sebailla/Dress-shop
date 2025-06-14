@@ -3,12 +3,9 @@ import { initialData } from "@/seed/seed"
 import Image from "next/image"
 import clsx from 'clsx';
 import { IoCardOutline } from "react-icons/io5";
-
-const productsInCart = [
-    initialData.products[0],
-    initialData.products[1],
-    initialData.products[2],
-]
+import { getOrderById } from "@/actions";
+import { redirect } from "next/navigation";
+import { currencyFormat } from "@/utils";
 
 interface Props {
     params: {
@@ -16,111 +13,157 @@ interface Props {
     }
 }
 
-const OrderPage = ({ params }: Props) => {
+const OrderPage = async ({ params }: Props) => {
 
     const { id } = params
+
+    //! Call server action getOrderById
+
+    const { order, ok, message } = await getOrderById(id)
+
+    if (!ok) redirect('/')
+
+    const address = order!.OrderAddress
+    const items = order!.OrderItem
+
 
     return (
         <div className="flex justify-center items-center px-10 sm:px-0">
 
             <div className="flex flex-col w-[1000px]">
 
-                <Title title={`Order id: ${id}`} />
+                <Title title={`Order id: ${id.split('-').at(-1)}`} />
 
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-10">
+                {/* Checkout */}
+                <div className=" grid grid-cols-1 sm:grid-cols-2 gap-10">
+                    <div className="flex flex-col bg-white rounded-xl shadow-xl p-7">
+                        <h2 className="text-2xl mb-2">Dispatch address</h2>
 
-                    {/* cart */}
-                    <div className="flex flex-col mt-5">
+                        <h4 className="my-2 text-md font-normal">Name order:</h4>
 
-                        <div className={
-                            clsx(
-                                "flex items-center rounded-lg py-2 px-3.5 text-sm font-bold text-white mb-5",
-                                {
-                                    "bg-red-500": false,
-                                    "bg-green-400": true,
-                                }
-                            )
-                        }>
-                            <IoCardOutline size={30} />
-                            {/* <span className="mx-2">Pending payment</span> */}
-                            <span className="mx-2">Paid</span>
-                        </div>
+                        <p><span className=" font-semibold text-red-900">{address?.firstName} {address?.lastName}</span> </p>
 
-                        {/* Items */}
+                        <h4 className="my-2 text-md font-bold">Address</h4>
                         {
-                            productsInCart.map((product) => (
-                                <div key={product.slug} className="flex mb-5">
-                                    <Image
-                                        src={`/products/${product.images[0]}`}
-                                        alt={product.title}
-                                        width={100}
-                                        height={100}
-                                        style={{
-                                            width: "100px",
-                                            height: "100px"
-                                        }}
-                                        className="mr-5 rounded"
-                                    />
-                                    <div>
-                                        <div className="">
-                                            <p>{product.title}</p>
-                                            <p className="font-bold">$ {product.price} x 3</p>
-                                            <p className="font-bold">Subtotal: $ {product.price * 3}</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            ))
+                            address?.address2
+                                ?
+                                <p>{address?.address}, {address?.address2} - <span className="mt-2 font-semibold">PC:</span> {address?.postalCode} - {address?.city}, {address?.countryId}</p>
+                                :
+                                <p>{address?.address} - <span className="mt-2 font-semibold">PC:</span> {address?.postalCode} - {address?.city}, {address?.countryId}</p>
                         }
+
+                        <p className="mt-2 text-md font-normal">
+                            <span className="font-semibold">Phone:</span> {address?.phone}</p>
+
                     </div>
 
                     {/* Checkout */}
-                    <div className="bg-white rounded-xl shadow-xl p-7">
-
-                        <h2 className="text-2xl mb-2">Dispatch address</h2>
-                        <div className="mb-10">
-                            <p>Sebastián Illa</p>
-                            <p>Av. Siempre viva 123</p>
-                            <p>San José, Costa Rica</p>
-                            <p>CP: 23234</p>
-                        </div>
-                        {/* Divider line */}
-                        <div
-                            className="w-full h-0.5 bg-gray-200 mb-10 rounded"
-                        ></div>
+                    <div className="flex flex-col bg-white rounded-xl shadow-xl p-7 h-fit">
 
                         <h2 className="text-2xl mb-2">Checkout</h2>
                         <div className="grid grid-cols-2">
                             <span>N° Items</span>
-                            <span className="text-right">1</span>
+                            <span className="text-right">{order!.totalItems}</span>
 
                             <span>Subtotal</span>
-                            <span className="text-right">$ 100</span>
+                            <span className="text-right">{currencyFormat(order!.subTotal)}</span>
 
                             <span>TAX (21%)</span>
-                            <span className="text-right">$ 21</span>
+                            <span className="text-right">{currencyFormat(order!.tax)}</span>
 
                             <span className="mt-5 text-2xl">Total</span>
-                            <span className="mt-5 text-2xl text-right">$ 121</span>
+                            <span className="mt-5 text-2xl text-right">{currencyFormat(order!.total)}</span>
                         </div>
 
-                        <div className="mt-5 mb-2 w-full">
-                            <div className={
-                                clsx(
-                                    "flex items-center rounded-lg py-2 px-3.5 text-sm font-bold text-white mb-5",
-                                    {
-                                        "bg-red-500": false,
-                                        "bg-green-400": true,
-                                    }
-                                )
-                            }>
-                                <IoCardOutline size={30} />
-                                {/* <span className="mx-2">Pending payment</span> */}
-                                <span className="mx-2">Paid</span>
-                            </div>
+
+                        <div className={
+                            clsx(
+                                "flex items-center rounded-lg py-2 px-3.5 text-sm font-bold text-white mt-5",
+                                {
+                                    "bg-red-500": !order!.isPaid,
+                                    "bg-green-400": order!.isPaid,
+                                }
+                            )
+                        }>
+                            <IoCardOutline size={30} />
+                            <span className="mx-2">
+                                {order?.isPaid ? 'Paid' : 'Pending payment'}
+                            </span>
                         </div>
                     </div>
-
                 </div>
+
+                {/* cart */}
+                <table className="min-w-full mt-10">
+                    <thead className="bg-gray-200 border-b">
+                        <tr>
+                            <th scope="col" className="text-sm font-medium text-gray-900 px-6 py-4 text-left">
+                                Image
+                            </th>
+                            <th scope="col" className="text-sm font-medium text-gray-900 px-6 py-4 text-left">
+                                Product
+                            </th>
+                            <th scope="col" className="text-sm font-medium text-gray-900 px-6 py-4 text-left">
+                                Size
+                            </th>
+                            <th scope="col" className="text-sm font-medium text-gray-900 px-6 py-4 text-left">
+                                Price
+                            </th>
+                            <th scope="col" className="text-sm font-medium text-gray-900 px-6 py-4 text-left">
+                                Quantity
+                            </th>
+                            <th scope="col" className="text-sm font-medium text-gray-900 px-6 py-4 text-left">
+                                Subtotal
+                            </th>
+
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                        {
+                            items.map((item) => (
+                                <tr
+                                    key={`${item.product.slug}${item.size}`}
+                                    className="bg-white border-b transition duration-300 ease-in-out hover:bg-gray-100"
+                                >
+
+                                    <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                                        <Image
+                                            src={`/products/${item.product.ProductImage[0].url}`}
+                                            alt={item.product.title}
+                                            width={100}
+                                            height={100}
+                                            style={{
+                                                width: "100px",
+                                                height: "100px"
+                                            }}
+                                            className="mr-5 rounded"
+                                        />
+                                    </td>
+                                    <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                                        {
+                                            item.product.title
+                                        }
+
+                                    </td>
+                                    <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
+                                        {item.size}
+                                    </td>
+                                    <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
+                                        {currencyFormat(item.price)}
+                                    </td>
+                                    <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
+                                        {item.quantity}
+                                    </td>
+                                    <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
+                                        {currencyFormat(item.price * item.quantity)}
+                                    </td>
+                                </tr>
+                            ))
+                        }
+
+                    </tbody>
+                </table>
 
             </div>
         </div >
