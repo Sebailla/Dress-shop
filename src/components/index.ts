@@ -17,3 +17,7 @@ export * from './product/stock-label/StockLabel'
 
 export * from './cart/items/ItemsInCart'
 export * from './cart/ordeSummary/OrderSummary'
+
+export * from './paypal/PaypalButton'
+
+export * from './ui/buttons/PaymentState'

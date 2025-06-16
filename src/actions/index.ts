@@ -1,3 +1,4 @@
+import { setTransactionId } from './payments/setTransactionId';
 
 export {getPaginatedProductsWithImages} from './products/product-pagination'
 export {getProductBySlug} from './products/getProductBySlug'
@@ -18,6 +19,9 @@ export {getUserAddress} from './address/getUserAddress'
 export {placeOrder} from './orders/placeOrder'
 export {getOrderById} from './orders/getOrderById'
 export {getOrderByUser} from './orders/getOrdersByUser'
+
+export {setTransactionId} from './payments/setTransactionId'
+export {paypalCheckPayment} from './payments/paypalCheckPayment'
 
 
 

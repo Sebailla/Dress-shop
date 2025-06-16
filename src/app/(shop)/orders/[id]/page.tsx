@@ -1,5 +1,4 @@
-import { Title } from "@/components"
-import { initialData } from "@/seed/seed"
+import { PaymentState, PaypalButton, Title } from "@/components"
 import Image from "next/image"
 import clsx from 'clsx';
 import { IoCardOutline } from "react-icons/io5";
@@ -36,8 +35,11 @@ const OrderPage = async ({ params }: Props) => {
 
                 {/* Checkout */}
                 <div className=" grid grid-cols-1 sm:grid-cols-2 gap-10">
-                    <div className="flex flex-col bg-white rounded-xl shadow-xl p-7">
-                        <h2 className="text-2xl mb-2">Dispatch address</h2>
+                    <div className="flex flex-col h-full bg-white rounded-xl shadow-xl p-7">
+
+                        <PaymentState isPaid={order!.isPaid} />
+
+                        <h2 className="text-2xl my-2">Dispatch address</h2>
 
                         <h4 className="my-2 text-md font-normal">Name order:</h4>
 
@@ -47,13 +49,18 @@ const OrderPage = async ({ params }: Props) => {
                         {
                             address?.address2
                                 ?
-                                <p>{address?.address}, {address?.address2} - <span className="mt-2 font-semibold">PC:</span> {address?.postalCode} - {address?.city}, {address?.countryId}</p>
+                                (
+                                    <p>{address?.address}, {address?.address2} - <span className="mt-2 font-semibold">PC:</span> {address?.postalCode} - {address?.city}, {address?.countryId}</p>
+                                )
                                 :
-                                <p>{address?.address} - <span className="mt-2 font-semibold">PC:</span> {address?.postalCode} - {address?.city}, {address?.countryId}</p>
+                                (
+                                    <p>{address?.address} - <span className="mt-2 font-semibold">PC:</span> {address?.postalCode} - {address?.city}, {address?.countryId}</p>
+                                )
                         }
 
                         <p className="mt-2 text-md font-normal">
-                            <span className="font-semibold">Phone:</span> {address?.phone}</p>
+                            <span className="font-semibold">Phone:</span> {address?.phone}
+                        </p>
 
                     </div>
 
@@ -74,21 +81,21 @@ const OrderPage = async ({ params }: Props) => {
                             <span className="mt-5 text-2xl">Total</span>
                             <span className="mt-5 text-2xl text-right">{currencyFormat(order!.total)}</span>
                         </div>
-
-
-                        <div className={
-                            clsx(
-                                "flex items-center rounded-lg py-2 px-3.5 text-sm font-bold text-white mt-5",
-                                {
-                                    "bg-red-500": !order!.isPaid,
-                                    "bg-green-400": order!.isPaid,
-                                }
-                            )
-                        }>
-                            <IoCardOutline size={30} />
-                            <span className="mx-2">
-                                {order?.isPaid ? 'Paid' : 'Pending payment'}
-                            </span>
+                        <div className="w-full mt-10">
+                            {
+                                order!.isPaid
+                                    ?
+                                    (
+                                        <PaymentState isPaid={order!.isPaid} />
+                                    )
+                                    :
+                                    (
+                                        <PaypalButton
+                                            amount={order!.total}
+                                            orderId={order!.id}
+                                        />
+                                    )
+                            }
                         </div>
                     </div>
                 </div>
