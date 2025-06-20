@@ -4,10 +4,11 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
+    "build": "npm run prisma:deploy && next build",
     "start": "next start",
     "lint": "next lint",
-    "seed": "ts-node src/seed/seed-database.ts"
+    "seed": "ts-node src/seed/seed-database.ts",
+    "prisma:deploy": "npx prisma migrate deploy && prisma generate"
   },
   "dependencies": {
     "@paypal/react-paypal-js": "^8.8.3",
@@ -33,7 +34,7 @@
     "eslint": "^8",
     "eslint-config-next": "14.2.28",
     "postcss": "^8",
-    "prisma": "^6.9.0",
+    "prisma": "^6.10.1",
     "tailwindcss": "^3.4.1",
     "ts-node": "^10.9.2",
     "tsx": "^4.19.4",
