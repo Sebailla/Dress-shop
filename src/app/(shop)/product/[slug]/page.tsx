@@ -1,7 +1,7 @@
 export const revalidate = 604800 // 7 días (segundos)
 
 //--------------------------------------------------------
-import { Metadata, ResolvingMetadata } from "next"
+import { Metadata} from "next"
 import { getProductBySlug } from "@/actions"
 import { ProductMobileSlideshow, ProductSlideshow, StockLabel } from "@/components"
 import { bodyFont, titleFont } from "@/config/fonts"
@@ -12,8 +12,7 @@ import { Selectors } from "./ui/Selectors"
 //? Metadata
 
 export async function generateMetadata(
-    { params }: Props,
-    parent: ResolvingMetadata
+    { params }: Props
 ): Promise<Metadata> {
     // read route params
     const slug = params.slug

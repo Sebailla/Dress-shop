@@ -2,7 +2,6 @@
 
 
 import { signIn } from '@/auth.config';
-import { ok } from 'assert';
 import { AuthError } from 'next-auth';
 
 // ...
@@ -39,6 +38,7 @@ export async function autoLogin(email:string, password:string) {
         })
         return {ok: true}
     } catch (error) {
+        console.log(error)
         return{
             ok: false,
             message: 'Invalid credentials'

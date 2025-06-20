@@ -1,9 +1,9 @@
 'use client'
 
-import Image from 'next/image'
 import { useCartStore } from '@/store'
 import { useEffect, useState } from 'react'
 import { currencyFormat } from '@/utils'
+import { ProductImage } from '@/components'
 
 
 export const ItemsInCart = () => {
@@ -28,8 +28,8 @@ export const ItemsInCart = () => {
                     <div key={`${product.slug}-${product.size}`} className="flex flex-col mb-5 rounded-xl border-gray-200 shadow-md p-5">
                         <div className="flex gap-[5px] flex-row items-start">
                             <div className="h-auto w-25">
-                                <Image
-                                    src={`/products/${product.image}`}
+                                <ProductImage
+                                    src={product.image}
                                     alt={product.title}
                                     width={100}
                                     height={100}
@@ -47,7 +47,7 @@ export const ItemsInCart = () => {
                                 <p>Subtotal: <span className='font-bold' > {currencyFormat(product.price * product.quantity)}</span></p>
                             </div>
                             <div className="h-auto text-right">
-                                <p>{currencyFormat(product.price * product.quantity)}</p>
+                                <p>{currencyFormat(product.price)}</p>
                             </div>
                         </div>
                     </div>

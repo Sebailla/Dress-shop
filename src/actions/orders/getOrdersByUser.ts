@@ -52,6 +52,7 @@ export const getOrderByUser = async () => {
         }
 
     } catch (error) {
+        console.log(error)
         return {
             ok: false,
             message: 'Order not found'

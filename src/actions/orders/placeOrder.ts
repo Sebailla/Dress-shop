@@ -143,7 +143,7 @@ export const placeOrder = async (productIds: ProductToOrder[], address: Address)
             prismaTx: prismaTx
         }
 
-    } catch (error: any) {
+    } catch (error: string | any) {
         return {
             ok: false,
             message: error.message || 'Something went wrong'

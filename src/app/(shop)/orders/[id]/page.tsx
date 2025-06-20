@@ -1,7 +1,4 @@
-import { PaymentState, PaypalButton, Title } from "@/components"
-import Image from "next/image"
-import clsx from 'clsx';
-import { IoCardOutline } from "react-icons/io5";
+import { PaymentState, PaypalButton, ProductImage, Title } from "@/components"
 import { getOrderById } from "@/actions";
 import { redirect } from "next/navigation";
 import { currencyFormat } from "@/utils";
@@ -18,7 +15,7 @@ const OrderPage = async ({ params }: Props) => {
 
     //! Call server action getOrderById
 
-    const { order, ok, message } = await getOrderById(id)
+    const { order, ok} = await getOrderById(id)
 
     if (!ok) redirect('/')
 
@@ -27,7 +24,7 @@ const OrderPage = async ({ params }: Props) => {
 
 
     return (
-        <div className="flex justify-center items-center px-10 sm:px-0">
+        <div className="flex justify-center items-center px-10 sm:px-0 ">
 
             <div className="flex flex-col w-[1000px]">
 
@@ -135,8 +132,8 @@ const OrderPage = async ({ params }: Props) => {
                                 >
 
                                     <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-                                        <Image
-                                            src={`/products/${item.product.ProductImage[0].url}`}
+                                        <ProductImage
+                                            src={item.product.ProductImage[0].url}
                                             alt={item.product.title}
                                             width={100}
                                             height={100}

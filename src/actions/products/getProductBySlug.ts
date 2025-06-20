@@ -4,6 +4,8 @@ import prisma from "@/lib/prisma"
 
 export const getProductBySlug = async (slug: string) => {
 
+    if (slug === 'new') return null;
+
     try {
 
         const product = await prisma.product.findFirst({
@@ -11,11 +13,7 @@ export const getProductBySlug = async (slug: string) => {
                 slug: slug
             },
             include: {
-                ProductImage: {
-                    select: {
-                        url: true
-                    }
-                }
+                ProductImage: true
             }
         })
 

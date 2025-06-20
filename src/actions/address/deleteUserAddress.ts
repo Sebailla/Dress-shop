@@ -16,6 +16,7 @@ export const deleteUserAddress = async ( userId: string) => {
             message: 'Address deleted successfully'
         }
     } catch (error) {
+        console.log(error)
         return {
             ok: false,
             message: 'Error to delete address'

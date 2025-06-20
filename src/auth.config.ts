@@ -6,6 +6,7 @@ import prisma from './lib/prisma';
 import bcrypt from 'bcryptjs';
 
 export const authConfig = {
+    trustHost: true,
     pages: {
         signIn: '/auth/login',
         newUser: '/auth/register',
@@ -17,7 +18,7 @@ export const authConfig = {
             }
             return token
         },
-        async session({ session, token, user }) {
+        async session({ session, token}) {
             session.user = token.data as any
             return session;
         },

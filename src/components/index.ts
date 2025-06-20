@@ -8,6 +8,7 @@ export * from './ui/sidebar/Sidebar'
 
 export * from './products/products-grid/ProductsGrid'
 export * from './products/products-grid/ProductGridItem'
+export * from './product/images/ProductImage'
 
 export * from './product/size-selector/SizeSelector'
 export * from './product/quantity-selector/QuantitySelector'
@@ -21,3 +22,4 @@ export * from './cart/ordeSummary/OrderSummary'
 export * from './paypal/PaypalButton'
 
 export * from './ui/buttons/PaymentState'
+

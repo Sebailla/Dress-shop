@@ -3,7 +3,6 @@
 import { PaypalOrderStatusResponse } from "@/interfaces"
 import prisma from "@/lib/prisma"
 import { revalidatePath } from "next/cache"
-import { cache } from "react"
 
 
 export const paypalCheckPayment = async (transactionId: string) => {
@@ -61,6 +60,7 @@ export const paypalCheckPayment = async (transactionId: string) => {
         }
 
     } catch (error) {
+        console.log(error)
         return {
             ok: false,
             message: 'Paypal order not payment'

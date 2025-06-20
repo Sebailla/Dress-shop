@@ -16,6 +16,7 @@ export const setUserAddress = async (address: Address, userId: string) => {
         }
 
     } catch (error) {
+        console.log(error)
         return {
             ok: false,
             message: 'Error to save address'
@@ -59,6 +60,7 @@ const createOrReplaceAddress = async (address: Address, userId: string) => {
         return updatedAddress
 
     } catch (error) {
+        console.log(error)
         throw new Error('Error to save address')
     }
 }

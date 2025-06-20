@@ -4,7 +4,7 @@ import { NextResponse } from 'next/server';
 
 const { auth } = NextAuth(authConfig);
 
-const privateRoutes = ['/checkout/address', '/checkout','/orders','/admin','/profile']
+const privateRoutes = ['/checkout/address', '/checkout','/orders','/profile']
 const publicRoutes = ['/']
 const authRoutes = ['/auth/login', '/auth/register']
 const apiAuthPrefix = '/api/auth'

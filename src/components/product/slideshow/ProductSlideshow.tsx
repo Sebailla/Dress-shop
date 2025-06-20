@@ -1,9 +1,8 @@
 'use client'
 
 import { useState } from 'react';
-import Image from 'next/image';
 import { Swiper as SwiperObjet } from 'swiper'
-
+import { ProductImage } from '../images/ProductImage';
 
 //! Import Swiper React components
 import { Swiper, SwiperSlide } from 'swiper/react';
@@ -48,8 +47,8 @@ export const ProductSlideshow = ({ images, title, className }: Props) => {
                 {
                     images.map((image, index) => (
                         <SwiperSlide key={index}>
-                            <Image
-                                src={`/products/${image}`}
+                            <ProductImage
+                                src={image}
                                 width={1024}
                                 height={800}
                                 alt={title}
@@ -71,8 +70,8 @@ export const ProductSlideshow = ({ images, title, className }: Props) => {
                 {
                     images.map((image, index) => (
                         <SwiperSlide key={index}>
-                            <Image
-                                src={`/products/${image}`}
+                            <ProductImage
+                                src={image}
                                 width={200}
                                 height={200}
                                 alt={title}

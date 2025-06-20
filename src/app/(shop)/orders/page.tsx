@@ -9,12 +9,11 @@ import Link from 'next/link';
 import { redirect } from 'next/navigation';
 import { IoCardOutline } from 'react-icons/io5';
 import { currencyFormat } from '../../../utils/currencyFormat';
-import { auth } from '@/auth.config';
+
 
 
 const OrdersPage = async () => {
 
-    const session = await auth()
     const { ok, orders = [] } = await getOrderByUser()
 
     if (!ok) {
@@ -23,9 +22,9 @@ const OrdersPage = async () => {
 
     return (
         <>
-            <Title title={`Orders ${session?.user.name}`} />
+            <Title title={`Orders`} />
 
-            <div className="mb-10">
+            <div className="mb-10 h-[100dvh]">
                 <table className="min-w-full">
                     <thead className="bg-gray-200 border-b">
                         <tr>

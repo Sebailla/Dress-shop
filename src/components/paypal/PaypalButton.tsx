@@ -8,7 +8,7 @@ import { paypalCheckPayment, setTransactionId } from "@/actions"
 
 interface Props {
     orderId: string
-    amount: number
+    amount: number |undefined
 }
 
 
@@ -16,7 +16,7 @@ export const PaypalButton = ({ orderId, amount }: Props) => {
 
     const [{ isPending }] = usePayPalScriptReducer()
 
-    const roundedAmount = (Math.round(amount * 100)) / 100
+    const roundedAmount = (Math.round(amount! * 100)) / 100
 
     if (isPending) {
         // Skeleton
@@ -32,11 +32,13 @@ export const PaypalButton = ({ orderId, amount }: Props) => {
     const createOrder = async (data: CreateOrderData, actions: CreateOrderActions): Promise<string> => {
 
         const transactionId = await actions.order.create({
+            intent: 'CAPTURE',
             purchase_units: [
                 {
                     invoice_id: orderId,
                     amount: {
-                        value: `${roundedAmount}`
+                        value: `${roundedAmount}`,
+                        currency_code: 'USD'
                     },
                 }
             ]

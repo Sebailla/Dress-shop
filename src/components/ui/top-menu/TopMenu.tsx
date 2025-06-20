@@ -1,4 +1,5 @@
 'use client'
+import { auth } from "@/auth.config"
 import { titleFont } from "@/config/fonts"
 import { useCartStore, useUiStore } from "@/store"
 import Link from "next/link"
@@ -6,7 +7,9 @@ import { useEffect, useState } from "react"
 import { IoCartOutline, IoSearchOutline } from "react-icons/io5"
 
 
-export const TopMenu = () => {
+export const TopMenu =  async() => {
+
+    const session = await auth()
 
     const [loaded, SetLoaded]= useState(false)
 

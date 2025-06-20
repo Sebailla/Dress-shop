@@ -7,7 +7,6 @@ import { useFormState, useFormStatus } from "react-dom";
 import { authenticate } from "@/actions";
 import { IoWarningOutline } from "react-icons/io5";
 import clsx from 'clsx';
-import { signIn } from '@/auth.config';
 
 
 export const LoginForm = () => {
